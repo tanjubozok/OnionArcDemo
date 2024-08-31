@@ -1,6 +1,6 @@
-﻿namespace OnionArc.Domain.Entities;
+﻿namespace Application.Features.CQRS.Results.AboutResults;
 
-public class About
+public class GetAboutQueryResult
 {
     public int Id { get; set; }
     public string Title { get; set; }

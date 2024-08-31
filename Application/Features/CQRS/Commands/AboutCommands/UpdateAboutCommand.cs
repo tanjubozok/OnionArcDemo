@@ -1,6 +1,6 @@
-﻿namespace OnionArc.Domain.Entities;
+﻿namespace Application.Features.CQRS.Commands.AboutCommands;
 
-public class About
+public class UpdateAboutCommand
 {
     public int Id { get; set; }
     public string Title { get; set; }
