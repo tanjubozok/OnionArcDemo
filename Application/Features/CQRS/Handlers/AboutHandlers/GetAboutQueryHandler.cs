@@ -16,6 +16,7 @@ public class GetAboutQueryHandler
     public async Task<List<GetAboutQueryResult>> Handle()
     {
         var values = await _repository.GetAllAsync();
+
         return values.Select(x => new GetAboutQueryResult
         {
             Description = x.Description,

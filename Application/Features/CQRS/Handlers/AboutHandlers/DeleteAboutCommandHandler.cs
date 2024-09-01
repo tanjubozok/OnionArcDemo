@@ -15,10 +15,10 @@ public class DeleteAboutCommandHandler
 
     public async Task Handle(DeleteAboutCommand command)
     {
-        var value = await _repository.GetByIdAsync(command.Id);
-        if (value == null)
-            throw new KeyNotFoundException($"About with ID '{command.Id}' was not found.");
+        var value =
+            await _repository.GetByIdAsync(command.Id)
+            ?? throw new KeyNotFoundException($"About with ID '{command.Id}' was not found.");
 
-        _repository.DeleteAsync(value);
+        await _repository.DeleteAsync(value);
     }
 }

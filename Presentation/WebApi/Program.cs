@@ -1,5 +1,6 @@
 using Application.Abstract;
 using Application.Features.CQRS.Handlers.AboutHandlers;
+using Application.Features.CQRS.Handlers.BannerHandlers;
 using Persistence.Context;
 using Persistence.Repositories;
 
@@ -14,6 +15,12 @@ builder.Services.AddScoped<DeleteAboutCommandHandler>();
 builder.Services.AddScoped<UpdateAboutCommandHandler>();
 builder.Services.AddScoped<GetAboutByIdQueryHandler>();
 builder.Services.AddScoped<GetAboutQueryHandler>();
+
+builder.Services.AddScoped<GetBannerQueryHandler>();
+builder.Services.AddScoped<GetBannerByIdQueryHandler>();
+builder.Services.AddScoped<CreateBannerCommandHandler>();
+builder.Services.AddScoped<UpdateBannerCommandHandler>();
+builder.Services.AddScoped<DeleteBannerCommandHandler>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

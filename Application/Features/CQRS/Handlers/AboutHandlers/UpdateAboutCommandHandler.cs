@@ -15,13 +15,14 @@ public class UpdateAboutCommandHandler
 
     public async Task Handle(UpdateAboutCommand command)
     {
-        var values = await _repository.GetByIdAsync(command.Id);
-        if (values == null)
-            throw new KeyNotFoundException($"About with ID '{command.Id}' was not found.");
+        var values =
+            await _repository.GetByIdAsync(command.Id)
+            ?? throw new KeyNotFoundException($"About with ID '{command.Id}' was not found.");
 
         values.Description = command.Description;
         values.Title = command.Title;
         values.ImageUrl = command.ImageUrl;
+
         await _repository.UpdateAsync(values);
     }
 }

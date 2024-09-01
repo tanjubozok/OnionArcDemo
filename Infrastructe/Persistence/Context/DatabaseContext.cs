@@ -7,7 +7,8 @@ public class DatabaseContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=DESKTOP-99JOTPE;Database=OnionArcData;User Id=sa;Password=1234;TrustServerCertificate=True;");
+        //optionsBuilder.UseSqlServer("Server=DESKTOP-99JOTPE;Database=OnionArcData;User Id=sa;Password=1234;TrustServerCertificate=True;");
+        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=OnionArcData;User Id=sa;Password=Root123*;TrustServerCertificate=True;");
     }
 
     public DbSet<About> Abouts { get; set; }

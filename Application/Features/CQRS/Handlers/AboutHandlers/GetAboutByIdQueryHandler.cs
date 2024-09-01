@@ -17,15 +17,15 @@ public class GetAboutByIdQueryHandler
     public async Task<GetAboutByIdQueryResult> Handle(GetAboutByIdQuery query)
     {
         var result = await _repository.GetByIdAsync(query.Id);
-        if (result == null)
-            throw new KeyNotFoundException($"About with ID '{query.Id}' was not found.");
 
-        return new GetAboutByIdQueryResult
-        {
-            Description = result.Description,
-            Id = result.Id,
-            ImageUrl = result.ImageUrl,
-            Title = result.Title
-        };
+        return result == null
+            ? throw new KeyNotFoundException($"About with ID '{query.Id}' was not found.")
+            : new GetAboutByIdQueryResult
+            {
+                Description = result.Description,
+                Id = result.Id,
+                ImageUrl = result.ImageUrl,
+                Title = result.Title
+            };
     }
 }
