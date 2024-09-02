@@ -1,4 +1,4 @@
-﻿namespace OnionArc.Domain.Entities;
+﻿namespace Domain.Entities;
 
 public class CarFeature
 {

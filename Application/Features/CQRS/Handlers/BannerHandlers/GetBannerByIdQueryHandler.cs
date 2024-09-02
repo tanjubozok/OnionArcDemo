@@ -1,7 +1,7 @@
 ﻿using Application.Abstract;
 using Application.Features.CQRS.Queries.BannerQueries;
 using Application.Features.CQRS.Results.BannerResults;
-using OnionArc.Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Features.CQRS.Handlers.BannerHandlers;
 

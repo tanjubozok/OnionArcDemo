@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnionArc.Domain.Entities;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Context;
 

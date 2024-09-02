@@ -1,6 +1,6 @@
 ﻿using Application.Abstract;
 using Application.Features.CQRS.Commands.BrandCommands;
-using OnionArc.Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Features.CQRS.Handlers.BrandHandlers;
 

@@ -1,7 +1,7 @@
 ﻿using Application.Abstract;
 using Application.Features.CQRS.Queries.BrandQueries;
 using Application.Features.CQRS.Results.BrandResults;
-using OnionArc.Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Features.CQRS.Handlers.BrandHandlers;
 
