@@ -2,5 +2,10 @@
 
 public class DeleteBrandCommand
 {
-    public int MyProperty { get; set; }
+    public int Id { get; set; }
+
+    public DeleteBrandCommand(int id)
+    {
+        Id = id;
+    }
 }
