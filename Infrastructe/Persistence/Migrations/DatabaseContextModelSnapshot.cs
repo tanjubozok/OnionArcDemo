@@ -22,7 +22,7 @@ namespace Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.About", b =>
+            modelBuilder.Entity("Domain.Entities.About", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace Persistence.Migrations
                     b.ToTable("Abouts");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Banner", b =>
+            modelBuilder.Entity("Domain.Entities.Banner", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace Persistence.Migrations
                     b.ToTable("Banners");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Brand", b =>
+            modelBuilder.Entity("Domain.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace Persistence.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Car", b =>
+            modelBuilder.Entity("Domain.Entities.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,7 +140,7 @@ namespace Persistence.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarDescription", b =>
+            modelBuilder.Entity("Domain.Entities.CarDescription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +162,7 @@ namespace Persistence.Migrations
                     b.ToTable("CarDescriptions");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarFeature", b =>
+            modelBuilder.Entity("Domain.Entities.CarFeature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -188,7 +188,7 @@ namespace Persistence.Migrations
                     b.ToTable("CarFeatures");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarPrice", b =>
+            modelBuilder.Entity("Domain.Entities.CarPrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -214,7 +214,32 @@ namespace Persistence.Migrations
                     b.ToTable("CarPrices");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Category", b =>
+            modelBuilder.Entity("Domain.Entities.CarService", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IconUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CarServices");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,7 +256,7 @@ namespace Persistence.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Contact", b =>
+            modelBuilder.Entity("Domain.Entities.Contact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -263,7 +288,7 @@ namespace Persistence.Migrations
                     b.ToTable("Contacts");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Feature", b =>
+            modelBuilder.Entity("Domain.Entities.Feature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +305,7 @@ namespace Persistence.Migrations
                     b.ToTable("Features");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.FooterAddress", b =>
+            modelBuilder.Entity("Domain.Entities.FooterAddress", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -309,7 +334,7 @@ namespace Persistence.Migrations
                     b.ToTable("FooterAddresses");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Location", b =>
+            modelBuilder.Entity("Domain.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -326,7 +351,7 @@ namespace Persistence.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Price", b =>
+            modelBuilder.Entity("Domain.Entities.Price", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -343,7 +368,7 @@ namespace Persistence.Migrations
                     b.ToTable("Prices");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.SocialMedia", b =>
+            modelBuilder.Entity("Domain.Entities.SocialMedia", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -368,7 +393,7 @@ namespace Persistence.Migrations
                     b.ToTable("SocialMedias");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Testimonial", b =>
+            modelBuilder.Entity("Domain.Entities.Testimonial", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -397,9 +422,9 @@ namespace Persistence.Migrations
                     b.ToTable("Testimonials");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Car", b =>
+            modelBuilder.Entity("Domain.Entities.Car", b =>
                 {
-                    b.HasOne("OnionArc.Domain.Entities.Brand", "Brand")
+                    b.HasOne("Domain.Entities.Brand", "Brand")
                         .WithMany("Cars")
                         .HasForeignKey("BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -408,9 +433,9 @@ namespace Persistence.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarDescription", b =>
+            modelBuilder.Entity("Domain.Entities.CarDescription", b =>
                 {
-                    b.HasOne("OnionArc.Domain.Entities.Car", "Car")
+                    b.HasOne("Domain.Entities.Car", "Car")
                         .WithMany("CarDescriptions")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -419,15 +444,15 @@ namespace Persistence.Migrations
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarFeature", b =>
+            modelBuilder.Entity("Domain.Entities.CarFeature", b =>
                 {
-                    b.HasOne("OnionArc.Domain.Entities.Car", "Car")
+                    b.HasOne("Domain.Entities.Car", "Car")
                         .WithMany("CarFeatures")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnionArc.Domain.Entities.Feature", "Feature")
+                    b.HasOne("Domain.Entities.Feature", "Feature")
                         .WithMany("CarFeatures")
                         .HasForeignKey("FeatureId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -438,15 +463,15 @@ namespace Persistence.Migrations
                     b.Navigation("Feature");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.CarPrice", b =>
+            modelBuilder.Entity("Domain.Entities.CarPrice", b =>
                 {
-                    b.HasOne("OnionArc.Domain.Entities.Car", "Car")
+                    b.HasOne("Domain.Entities.Car", "Car")
                         .WithMany("CarPrices")
                         .HasForeignKey("CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OnionArc.Domain.Entities.Price", "Price")
+                    b.HasOne("Domain.Entities.Price", "Price")
                         .WithMany("CarPrices")
                         .HasForeignKey("PriceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -457,12 +482,12 @@ namespace Persistence.Migrations
                     b.Navigation("Price");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Brand", b =>
+            modelBuilder.Entity("Domain.Entities.Brand", b =>
                 {
                     b.Navigation("Cars");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Car", b =>
+            modelBuilder.Entity("Domain.Entities.Car", b =>
                 {
                     b.Navigation("CarDescriptions");
 
@@ -471,12 +496,12 @@ namespace Persistence.Migrations
                     b.Navigation("CarPrices");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Feature", b =>
+            modelBuilder.Entity("Domain.Entities.Feature", b =>
                 {
                     b.Navigation("CarFeatures");
                 });
 
-            modelBuilder.Entity("OnionArc.Domain.Entities.Price", b =>
+            modelBuilder.Entity("Domain.Entities.Price", b =>
                 {
                     b.Navigation("CarPrices");
                 });

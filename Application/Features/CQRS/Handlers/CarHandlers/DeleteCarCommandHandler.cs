@@ -1,8 +1,4 @@
-﻿using Application.Abstract;
-using Application.Features.CQRS.Commands.CarCommands;
-using Domain.Entities;
-
-namespace Application.Features.CQRS.Handlers.CarHandlers;
+﻿namespace Application.Features.CQRS.Handlers.CarHandlers;
 
 public class DeleteCarCommandHandler
 {

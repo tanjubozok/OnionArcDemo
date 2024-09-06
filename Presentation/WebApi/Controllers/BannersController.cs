@@ -1,9 +1,4 @@
-﻿using Application.Features.CQRS.Commands.BannerCommands;
-using Application.Features.CQRS.Handlers.BannerHandlers;
-using Application.Features.CQRS.Queries.BannerQueries;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WebApi.Controllers;
+﻿namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

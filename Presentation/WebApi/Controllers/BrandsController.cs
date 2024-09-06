@@ -1,9 +1,4 @@
-﻿using Application.Features.CQRS.Commands.BrandCommands;
-using Application.Features.CQRS.Handlers.BrandHandlers;
-using Application.Features.CQRS.Queries.BrandQueries;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WebApi.Controllers;
+﻿namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

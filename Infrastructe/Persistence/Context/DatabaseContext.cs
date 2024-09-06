@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Persistence.Context;
+﻿namespace Persistence.Context;
 
 public class DatabaseContext : DbContext
 {
@@ -18,6 +15,7 @@ public class DatabaseContext : DbContext
     public DbSet<CarDescription> CarDescriptions { get; set; }
     public DbSet<CarFeature> CarFeatures { get; set; }
     public DbSet<CarPrice> CarPrices { get; set; }
+    public DbSet<CarService> CarServices { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Feature> Features { get; set; }

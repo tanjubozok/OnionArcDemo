@@ -1,8 +1,4 @@
-﻿using Application.Abstract;
-using Microsoft.EntityFrameworkCore;
-using Persistence.Context;
-
-namespace Persistence.Repositories;
+﻿namespace Persistence.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
@@ -27,7 +23,7 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task<List<T>> GetAllAsync()
     {
-        return await _context.Set<T>().ToListAsync();
+        return await _context.Set<T>().AsNoTracking().ToListAsync();
     }
 
     public async Task<T?> GetByIdAsync(int id)

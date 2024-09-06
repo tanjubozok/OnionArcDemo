@@ -1,8 +1,4 @@
-﻿using Application.Abstract;
-using Application.Features.CQRS.Commands.BannerCommands;
-using Domain.Entities;
-
-namespace Application.Features.CQRS.Handlers.BannerHandlers;
+﻿namespace Application.Features.CQRS.Handlers.BannerHandlers;
 
 public class CreateBannerCommandHandler
 {

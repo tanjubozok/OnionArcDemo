@@ -1,8 +1,4 @@
-﻿using Application.Abstract;
-using Application.Features.CQRS.Commands.AboutCommands;
-using Domain.Entities;
-
-namespace Application.Features.CQRS.Handlers.AboutHandlers;
+﻿namespace Application.Features.CQRS.Handlers.AboutHandlers;
 
 public class DeleteAboutCommandHandler
 {

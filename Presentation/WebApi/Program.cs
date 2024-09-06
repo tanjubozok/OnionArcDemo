@@ -1,16 +1,9 @@
-using Application.Abstract;
-using Application.Features.CQRS.Handlers.AboutHandlers;
-using Application.Features.CQRS.Handlers.BannerHandlers;
-using Application.Features.CQRS.Handlers.BrandHandlers;
-using Application.Features.CQRS.Handlers.CarHandlers;
-using Persistence.Context;
-using Persistence.Repositories;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<DatabaseContext>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped(typeof(ICarRepository), typeof(CarRepository));
 
 builder.Services.AddScoped<CreateAboutCommandHandler>();
 builder.Services.AddScoped<DeleteAboutCommandHandler>();
@@ -35,6 +28,21 @@ builder.Services.AddScoped<GetCarByIdQueryHandler>();
 builder.Services.AddScoped<CreateCarCommandHandler>();
 builder.Services.AddScoped<UpdateCarCommandHandler>();
 builder.Services.AddScoped<DeleteCarCommandHandler>();
+builder.Services.AddScoped<GetCarWithBrandQueryHandler>();
+
+builder.Services.AddScoped<GetCategoryQueryHandler>();
+builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
+builder.Services.AddScoped<CreateCategoryCommandHandler>();
+builder.Services.AddScoped<UpdateCategoryCommandHandler>();
+builder.Services.AddScoped<DeleteCategoryCommandHandler>();
+
+builder.Services.AddScoped<GetContactQueryHandler>();
+builder.Services.AddScoped<GetContactByIdQueryHandler>();
+builder.Services.AddScoped<CreateContactCommandHandler>();
+builder.Services.AddScoped<UpdateContactCommandHandler>();
+builder.Services.AddScoped<DeleteContactCommandHandler>();
+
+builder.Services.AddApplicationRegistration();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

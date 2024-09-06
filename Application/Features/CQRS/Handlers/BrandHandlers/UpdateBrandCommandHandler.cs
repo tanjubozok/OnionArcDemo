@@ -1,8 +1,4 @@
-﻿using Application.Abstract;
-using Application.Features.CQRS.Commands.BrandCommands;
-using Domain.Entities;
-
-namespace Application.Features.CQRS.Handlers.BrandHandlers;
+﻿namespace Application.Features.CQRS.Handlers.BrandHandlers;
 
 public class UpdateBrandCommandHandler
 {

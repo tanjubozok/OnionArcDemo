@@ -1,9 +1,4 @@
-﻿using Application.Features.CQRS.Commands.AboutCommands;
-using Application.Features.CQRS.Handlers.AboutHandlers;
-using Application.Features.CQRS.Queries.AboutQueries;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WebApi.Controllers;
+﻿namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

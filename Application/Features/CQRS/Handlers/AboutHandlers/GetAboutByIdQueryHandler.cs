@@ -1,9 +1,4 @@
-﻿using Application.Abstract;
-using Application.Features.CQRS.Queries.AboutQueries;
-using Application.Features.CQRS.Results.AboutResults;
-using Domain.Entities;
-
-namespace Application.Features.CQRS.Handlers.AboutHandlers;
+﻿namespace Application.Features.CQRS.Handlers.AboutHandlers;
 
 public class GetAboutByIdQueryHandler
 {

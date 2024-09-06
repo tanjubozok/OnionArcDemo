@@ -1,9 +1,4 @@
-﻿using Application.Features.CQRS.Commands.CarCommands;
-using Application.Features.CQRS.Handlers.CarHandlers;
-using Application.Features.CQRS.Queries.CarQueries;
-using Microsoft.AspNetCore.Mvc;
-
-namespace WebApi.Controllers;
+﻿namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -14,14 +9,16 @@ public class CarsController : ControllerBase
     private readonly DeleteCarCommandHandler _deleteCarCommandHandler;
     private readonly GetCarByIdQueryHandler _getCarByIdQueryHandler;
     private readonly GetCarQueryHandler _getCarQueryHandler;
+    private readonly GetCarWithBrandQueryHandler _getCarWithBrandQueryHandler;
 
-    public CarsController(CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, GetCarQueryHandler getCarQueryHandler)
+    public CarsController(CreateCarCommandHandler createCarCommandHandler, UpdateCarCommandHandler updateCarCommandHandler, DeleteCarCommandHandler deleteCarCommandHandler, GetCarByIdQueryHandler getCarByIdQueryHandler, GetCarQueryHandler getCarQueryHandler, GetCarWithBrandQueryHandler getCarWithBrandQueryHandler)
     {
         _createCarCommandHandler = createCarCommandHandler;
         _updateCarCommandHandler = updateCarCommandHandler;
         _deleteCarCommandHandler = deleteCarCommandHandler;
         _getCarByIdQueryHandler = getCarByIdQueryHandler;
         _getCarQueryHandler = getCarQueryHandler;
+        _getCarWithBrandQueryHandler = getCarWithBrandQueryHandler;
     }
 
     [HttpGet]
@@ -77,6 +74,20 @@ public class CarsController : ControllerBase
         catch (KeyNotFoundException ex)
         {
             return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet("GetCarWithBrand")]
+    public async Task<IActionResult> GetAllCarWithBrand()
+    {
+        try
+        {
+            var values = await _getCarWithBrandQueryHandler.Handle();
+            return Ok(values);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An error occurred: {ex.Message}");
         }
     }
 }
