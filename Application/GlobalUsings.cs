@@ -38,6 +38,8 @@ global using Application.Features.Mediator.Results.LocationResults;
 global using Application.Features.Mediator.Results.PriceResults;
 global using Application.Features.Mediator.Results.SocialMediaResult;
 global using Application.Features.Mediator.Results.TestimonialResults;
+global using Domain.Abstract;
 global using Domain.Entities;
 global using MediatR;
 global using Microsoft.Extensions.DependencyInjection;
+global using System.Linq.Expressions;

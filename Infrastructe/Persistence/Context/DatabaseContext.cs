@@ -8,6 +8,19 @@ public class DatabaseContext : DbContext
         optionsBuilder.UseSqlServer("Server=localhost,1433;Database=OnionArcData;User Id=sa;Password=Root123*;TrustServerCertificate=True;");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new AboutConfiguration());
+        modelBuilder.ApplyConfiguration(new BannerConfiguration());
+        modelBuilder.ApplyConfiguration(new BrandConfiguration());
+        modelBuilder.ApplyConfiguration(new CarConfiguration());
+        modelBuilder.ApplyConfiguration(new CarDescriptionConfiguration());
+        modelBuilder.ApplyConfiguration(new CarFeatureConfiguration());
+        modelBuilder.ApplyConfiguration(new CarServiceConfiguration());
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+        modelBuilder.ApplyConfiguration(new ContactConfiguration());
+    }
+
     public DbSet<About> Abouts { get; set; }
     public DbSet<Banner> Banners { get; set; }
     public DbSet<Brand> Brands { get; set; }

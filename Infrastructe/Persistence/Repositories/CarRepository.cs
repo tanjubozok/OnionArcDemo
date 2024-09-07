@@ -1,17 +1,20 @@
 ﻿namespace Persistence.Repositories;
 
-public class CarRepository : ICarRepository
+public class CarRepository : Repository<Car>, ICarRepository
 {
     private readonly DatabaseContext _context;
 
     public CarRepository(DatabaseContext context)
+        : base(context)
     {
         _context = context;
     }
 
     public async Task<List<Car>> GetCarWithBrandListAsync()
     {
-        var result = await _context.Cars.Include(x => x.Brand).ToListAsync();
-        return result;
+        return await _context.Cars
+            .Include(x => x.Brand)
+            .AsNoTracking()
+            .ToListAsync();
     }
 }
