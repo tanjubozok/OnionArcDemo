@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Banner
+public class Banner : IBaseEntity
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;

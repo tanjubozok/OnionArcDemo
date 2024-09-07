@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class CarPrice
+public class CarPrice : IBaseEntity
 {
     public int Id { get; set; }
     public decimal Amount { get; set; }

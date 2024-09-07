@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class FooterAddress
+public class FooterAddress : IBaseEntity
 {
     public int Id { get; set; }
     public string Description { get; set; } = string.Empty;

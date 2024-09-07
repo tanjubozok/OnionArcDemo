@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class CarDescription
+public class CarDescription : IBaseEntity
 {
     public int Id { get; set; }
     public string Description { get; set; } = string.Empty;

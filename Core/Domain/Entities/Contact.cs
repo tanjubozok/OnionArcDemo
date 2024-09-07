@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Contact
+public class Contact : IBaseEntity
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
