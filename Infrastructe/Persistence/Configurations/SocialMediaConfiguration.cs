@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Persistence.Configurations;
 
-namespace Persistence.Configurations
+public class SocialMediaConfiguration : IEntityTypeConfiguration<SocialMedia>
 {
-    internal class SocialMediaConfiguration
+    public void Configure(EntityTypeBuilder<SocialMedia> builder)
     {
+        builder.ToTable("SocialMedias");
+
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id)
+            .UseIdentityColumn();
+
+        builder.Property(x => x.Name)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.Property(x => x.Url)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(x => x.Icon)
+            .IsRequired()
+            .HasMaxLength(500);
     }
 }
