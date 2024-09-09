@@ -2,11 +2,13 @@
 
 public class UpdateCategoryCommandHandler
 {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCategoryCommandHandler(IRepository<Category> repository)
+    public UpdateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateCategoryCommand command)
@@ -17,6 +19,7 @@ public class UpdateCategoryCommandHandler
 
         result.Name = command.Name;
 
-        await _repository.UpdateAsync(result);
+        _repository.Update(result);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

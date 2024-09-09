@@ -1,5 +1,4 @@
-﻿global using Application.Abstract;
-global using Application.Features.CQRS.Commands.AboutCommands;
+﻿global using Application.Features.CQRS.Commands.AboutCommands;
 global using Application.Features.CQRS.Commands.BannerCommands;
 global using Application.Features.CQRS.Commands.BrandCommands;
 global using Application.Features.CQRS.Commands.CarCommands;
@@ -32,5 +31,4 @@ global using Application.Features.Mediator.Queries.TestimonialQueries;
 global using Application.Services;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;
-global using Persistence.Context;
-global using Persistence.Repositories;
+global using Persistence.DependencyResolvers;

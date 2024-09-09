@@ -2,16 +2,22 @@
 
 public class DeleteTestimonialCommandHandler : IRequestHandler<DeleteTestimonialCommand>
 {
-    private readonly IRepository<Testimonial> _repository;
+    private readonly ITestimonialRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteTestimonialCommandHandler(IRepository<Testimonial> repository)
+    public DeleteTestimonialCommandHandler(ITestimonialRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteTestimonialCommand request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
-        await _repository.DeleteAsync(value);
+        var value =
+            await _repository.GetByIdAsync(request.Id) 
+            ?? throw new KeyNotFoundException($"Testimonial with ID '{request.Id}' was not found.");
+
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

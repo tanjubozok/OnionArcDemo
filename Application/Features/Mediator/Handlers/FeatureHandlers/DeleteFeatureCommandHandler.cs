@@ -2,11 +2,13 @@
 
 public class DeleteFeatureCommandHandler : IRequestHandler<DeleteFeatureCommand>
 {
-    private readonly IRepository<Feature> _repository;
+    private readonly IFeatureRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteFeatureCommandHandler(IRepository<Feature> repository)
+    public DeleteFeatureCommandHandler(IFeatureRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteFeatureCommand request, CancellationToken cancellationToken)
@@ -15,6 +17,7 @@ public class DeleteFeatureCommandHandler : IRequestHandler<DeleteFeatureCommand>
             await _repository.GetByIdAsync(request.Id)
             ?? throw new KeyNotFoundException($"Feature with ID '{request.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

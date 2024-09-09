@@ -2,11 +2,13 @@
 
 public class GetContactByIdQueryHandler
 {
-    private readonly IRepository<Contact> _repository;
+    private readonly IContactRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetContactByIdQueryHandler(IRepository<Contact> repository)
+    public GetContactByIdQueryHandler(IContactRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetContactByIdQueryResult> Handle(GetContactByIdQuery query)

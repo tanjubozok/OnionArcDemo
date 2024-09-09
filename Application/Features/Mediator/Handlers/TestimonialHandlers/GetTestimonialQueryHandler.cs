@@ -2,9 +2,9 @@
 
 public class GetTestimonialQueryHandler : IRequestHandler<GetTestimonialQuery, List<GetTestimonialQueryResult>>
 {
-    private readonly IRepository<Testimonial> _repository;
+    private readonly ITestimonialRepository _repository;
 
-    public GetTestimonialQueryHandler(IRepository<Testimonial> repository)
+    public GetTestimonialQueryHandler(ITestimonialRepository repository)
     {
         _repository = repository;
     }

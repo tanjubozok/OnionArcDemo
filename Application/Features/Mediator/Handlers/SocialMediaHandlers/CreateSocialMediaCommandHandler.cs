@@ -2,11 +2,13 @@
 
 public class CreateSocialMediaCommandHandler : IRequestHandler<CreateSocialMediaCommand>
 {
-    private readonly IRepository<SocialMedia> _repository;
+    private readonly ISocialMediaRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateSocialMediaCommandHandler(IRepository<SocialMedia> repository)
+    public CreateSocialMediaCommandHandler(ISocialMediaRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateSocialMediaCommand request, CancellationToken cancellationToken)
@@ -17,5 +19,7 @@ public class CreateSocialMediaCommandHandler : IRequestHandler<CreateSocialMedia
             Name = request.Name,
             Url = request.Url
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

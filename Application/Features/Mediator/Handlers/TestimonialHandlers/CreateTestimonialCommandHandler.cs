@@ -2,11 +2,13 @@
 
 public class CreateTestimonialCommandHandler : IRequestHandler<CreateTestimonialCommand>
 {
-    private readonly IRepository<Testimonial> _repository;
+    private readonly ITestimonialRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateTestimonialCommandHandler(IRepository<Testimonial> repository)
+    public CreateTestimonialCommandHandler(ITestimonialRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateTestimonialCommand request, CancellationToken cancellationToken)
@@ -18,5 +20,7 @@ public class CreateTestimonialCommandHandler : IRequestHandler<CreateTestimonial
             Name = request.Name,
             Title = request.Title
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

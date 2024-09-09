@@ -2,11 +2,13 @@
 
 public class UpdateCarCommandHandler
 {
-    private readonly IRepository<Car> _repository;
+    private readonly ICarRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCarCommandHandler(IRepository<Car> repository)
+    public UpdateCarCommandHandler(ICarRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateCarCommand command)
@@ -25,6 +27,7 @@ public class UpdateCarCommandHandler
         value.Model = command.Model;
         value.CoverImageUrl = command.CoverImageUrl;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

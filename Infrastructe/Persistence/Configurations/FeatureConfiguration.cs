@@ -13,5 +13,9 @@ public class FeatureConfiguration : IEntityTypeConfiguration<Feature>
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(200);
+
+        builder.HasMany(x => x.CarFeatures)
+            .WithOne(x => x.Feature)
+            .HasForeignKey(x => x.FeatureId);
     }
 }

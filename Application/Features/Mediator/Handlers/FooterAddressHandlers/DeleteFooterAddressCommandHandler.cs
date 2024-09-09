@@ -2,11 +2,13 @@
 
 public class DeleteFooterAddressCommandHandler : IRequestHandler<DeleteFooterAddressCommand>
 {
-    private readonly IRepository<FooterAddress> _repository;
+    private readonly IFooterAddressRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteFooterAddressCommandHandler(IRepository<FooterAddress> repository)
+    public DeleteFooterAddressCommandHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteFooterAddressCommand request, CancellationToken cancellationToken)
@@ -15,6 +17,7 @@ public class DeleteFooterAddressCommandHandler : IRequestHandler<DeleteFooterAdd
             await _repository.GetByIdAsync(request.Id)
             ?? throw new KeyNotFoundException($"FooterAddress with ID '{request.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

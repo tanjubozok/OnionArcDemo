@@ -2,11 +2,13 @@
 
 public class CreateBannerCommandHandler
 {
-    private readonly IRepository<Banner> _repository;
+    private readonly IBannerRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateBannerCommandHandler(IRepository<Banner> repository)
+    public CreateBannerCommandHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateBannerCommand command)
@@ -18,5 +20,7 @@ public class CreateBannerCommandHandler
             VideoDescription = command.VideoDescription,
             VideoUrl = command.VideoUrl
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

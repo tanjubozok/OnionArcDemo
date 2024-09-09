@@ -2,11 +2,13 @@
 
 public class CreateCategoryCommandHandler
 {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCategoryCommandHandler(IRepository<Category> repository)
+    public CreateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateCategoryCommand command)
@@ -15,5 +17,7 @@ public class CreateCategoryCommandHandler
         {
             Name = command.Name
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

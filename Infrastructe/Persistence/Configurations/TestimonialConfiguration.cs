@@ -10,6 +10,20 @@ public class TestimonialConfiguration : IEntityTypeConfiguration<Testimonial>
         builder.Property(x => x.Id)
             .UseIdentityColumn();
 
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+        builder.Property(x => x.Name)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.Property(x => x.Title)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(x => x.Comment)
+            .IsRequired()
+            .HasMaxLength(500);
+
+        builder.Property(x => x.ImageUrl)
+            .IsRequired()
+            .HasMaxLength(500);
     }
 }

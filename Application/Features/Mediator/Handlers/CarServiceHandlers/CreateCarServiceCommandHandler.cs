@@ -2,11 +2,13 @@
 
 public class CreateCarServiceCommandHandler : IRequestHandler<CreateCarServiceCommand>
 {
-    private readonly IRepository<CarService> _repository;
+    private readonly ICarServiceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCarServiceCommandHandler(IRepository<CarService> repository)
+    public CreateCarServiceCommandHandler(ICarServiceRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateCarServiceCommand request, CancellationToken cancellationToken)
@@ -17,5 +19,7 @@ public class CreateCarServiceCommandHandler : IRequestHandler<CreateCarServiceCo
             IconUrl = request.IconUrl,
             Title = request.Title
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

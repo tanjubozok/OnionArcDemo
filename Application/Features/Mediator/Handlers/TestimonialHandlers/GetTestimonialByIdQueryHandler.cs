@@ -2,16 +2,19 @@
 
 public class GetTestimonialByIdQueryHandler : IRequestHandler<GetTestimonialByIdQuery, GetTestimonialByIdQueryResult>
 {
-    private readonly IRepository<Testimonial> _repository;
+    private readonly ITestimonialRepository _repository;
 
-    public GetTestimonialByIdQueryHandler(IRepository<Testimonial> repository)
+    public GetTestimonialByIdQueryHandler(ITestimonialRepository repository)
     {
         _repository = repository;
     }
 
     public async Task<GetTestimonialByIdQueryResult> Handle(GetTestimonialByIdQuery request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
+        var value =
+            await _repository.GetByIdAsync(request.Id)
+            ?? throw new KeyNotFoundException($"Testimonial with ID '{request.Id}' was not found.");
+        
         return new GetTestimonialByIdQueryResult
         {
             Id = value.Id,

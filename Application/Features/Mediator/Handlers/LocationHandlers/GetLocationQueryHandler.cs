@@ -2,9 +2,9 @@
 
 public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, List<GetLocationQueryResult>>
 {
-    private readonly IRepository<Location> _repository;
+    private readonly ILocationRepository _repository;
 
-    public GetLocationQueryHandler(IRepository<Location> repository)
+    public GetLocationQueryHandler(ILocationRepository repository)
     {
         _repository = repository;
     }

@@ -2,11 +2,13 @@
 
 public class CreateContactCommandHandler
 {
-    private readonly IRepository<Contact> _repository;
+    private readonly IContactRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateContactCommandHandler(IRepository<Contact> repository)
+    public CreateContactCommandHandler(IContactRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateContactCommand command)
@@ -19,5 +21,7 @@ public class CreateContactCommandHandler
             SendDate = command.SendDate,
             Subject = command.Subject
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

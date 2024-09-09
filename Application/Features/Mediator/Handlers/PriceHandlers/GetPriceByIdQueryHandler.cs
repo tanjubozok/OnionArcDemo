@@ -2,9 +2,9 @@
 
 public class GetPriceByIdQueryHandler : IRequestHandler<GetPriceByIdQuery, GetPriceByIdQueryResult>
 {
-    private readonly IRepository<Price> _repository;
+    private readonly IPriceRepository _repository;
 
-    public GetPriceByIdQueryHandler(IRepository<Price> repository)
+    public GetPriceByIdQueryHandler(IPriceRepository repository)
     {
         _repository = repository;
     }

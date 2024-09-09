@@ -2,11 +2,13 @@
 
 public class DeleteCategoryCommandHandler
 {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCategoryCommandHandler(IRepository<Category> repository)
+    public DeleteCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteCategoryCommand command)
@@ -15,6 +17,7 @@ public class DeleteCategoryCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Category with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

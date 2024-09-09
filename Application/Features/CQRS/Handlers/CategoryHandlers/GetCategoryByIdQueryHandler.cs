@@ -2,9 +2,9 @@
 
 public class GetCategoryByIdQueryHandler
 {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoryRepository _repository;
 
-    public GetCategoryByIdQueryHandler(IRepository<Category> repository)
+    public GetCategoryByIdQueryHandler(ICategoryRepository repository)
     {
         _repository = repository;
     }

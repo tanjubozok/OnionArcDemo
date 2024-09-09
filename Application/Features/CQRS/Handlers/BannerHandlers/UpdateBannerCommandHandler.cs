@@ -2,11 +2,13 @@
 
 public class UpdateBannerCommandHandler
 {
-    private readonly IRepository<Banner> _repository;
+    private readonly IBannerRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateBannerCommandHandler(IRepository<Banner> repository)
+    public UpdateBannerCommandHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateBannerCommand command)
@@ -20,6 +22,7 @@ public class UpdateBannerCommandHandler
         value.VideoDescription = command.VideoDescription;
         value.VideoUrl = command.VideoUrl;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

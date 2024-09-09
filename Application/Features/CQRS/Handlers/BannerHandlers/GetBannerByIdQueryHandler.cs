@@ -2,11 +2,13 @@
 
 public class GetBannerByIdQueryHandler
 {
-    private readonly IRepository<Banner> _repository;
+    private readonly IBannerRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetBannerByIdQueryHandler(IRepository<Banner> repository)
+    public GetBannerByIdQueryHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetBannerByIdQueryResult> Handle(GetBannerByIdQuery query)

@@ -2,9 +2,9 @@
 
 public class GetFeatureQueryHandler : IRequestHandler<GetFeatureQuery, List<GetFeatureQueryResult>>
 {
-    private readonly IRepository<Feature> _repository;
+    private readonly IFeatureRepository _repository;
 
-    public GetFeatureQueryHandler(IRepository<Feature> repository)
+    public GetFeatureQueryHandler(IFeatureRepository repository)
     {
         _repository = repository;
     }

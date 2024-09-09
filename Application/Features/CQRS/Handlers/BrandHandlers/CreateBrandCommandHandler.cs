@@ -2,11 +2,13 @@
 
 public class CreateBrandCommandHandler
 {
-    private readonly IRepository<Brand> _repository;
+    private readonly IBrandRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateBrandCommandHandler(IRepository<Brand> repository)
+    public CreateBrandCommandHandler(IBrandRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateBrandCommand command)
@@ -15,5 +17,7 @@ public class CreateBrandCommandHandler
         {
             Name = command.Name,
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

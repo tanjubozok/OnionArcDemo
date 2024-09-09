@@ -2,9 +2,9 @@
 
 public class GetBannerQueryHandler
 {
-    private readonly IRepository<Banner> _repository;
+    private readonly IBannerRepository _repository;
 
-    public GetBannerQueryHandler(IRepository<Banner> repository)
+    public GetBannerQueryHandler(IBannerRepository repository)
     {
         _repository = repository;
     }

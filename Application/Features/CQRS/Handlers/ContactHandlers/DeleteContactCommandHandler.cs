@@ -2,11 +2,13 @@
 
 public class DeleteContactCommandHandler
 {
-    private readonly IRepository<Contact> _repository;
+    private readonly IContactRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteContactCommandHandler(IRepository<Contact> repository)
+    public DeleteContactCommandHandler(IContactRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteContactCommand command)
@@ -15,6 +17,7 @@ public class DeleteContactCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Contact with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

@@ -2,11 +2,13 @@
 
 public class GetFeatureByIdQueryHandler : IRequestHandler<GetFeatureByIdQuery, GetFeatureByIdQueryResult>
 {
-    private readonly IRepository<Feature> _repository;
+    private readonly IFeatureRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetFeatureByIdQueryHandler(IRepository<Feature> repository)
+    public GetFeatureByIdQueryHandler(IFeatureRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetFeatureByIdQueryResult> Handle(GetFeatureByIdQuery request, CancellationToken cancellationToken)

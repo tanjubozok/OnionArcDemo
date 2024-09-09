@@ -2,11 +2,16 @@
 
 public class DatabaseContext : DbContext
 {
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        : base(options)
     {
-        //optionsBuilder.UseSqlServer("Server=DESKTOP-99JOTPE;Database=OnionArcData;User Id=sa;Password=1234;TrustServerCertificate=True;");
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=OnionArcData;User Id=sa;Password=Root123*;TrustServerCertificate=True;");
     }
+
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    //optionsBuilder.UseSqlServer("Server=DESKTOP-99JOTPE;Database=OnionArcData;User Id=sa;Password=1234;TrustServerCertificate=True;");
+    //    optionsBuilder.UseSqlServer("Server=localhost,1433;Database=OnionArcData;User Id=sa;Password=Root123*;TrustServerCertificate=True;");
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -17,8 +22,15 @@ public class DatabaseContext : DbContext
         modelBuilder.ApplyConfiguration(new CarDescriptionConfiguration());
         modelBuilder.ApplyConfiguration(new CarFeatureConfiguration());
         modelBuilder.ApplyConfiguration(new CarServiceConfiguration());
+        modelBuilder.ApplyConfiguration(new CarPriceConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new ContactConfiguration());
+        modelBuilder.ApplyConfiguration(new FeatureConfiguration());
+        modelBuilder.ApplyConfiguration(new FooterAddressConfiguration());
+        modelBuilder.ApplyConfiguration(new LocationConfiguration());
+        modelBuilder.ApplyConfiguration(new PriceConfiguration());
+        modelBuilder.ApplyConfiguration(new SocialMediaConfiguration());
+        modelBuilder.ApplyConfiguration(new TestimonialConfiguration());
     }
 
     public DbSet<About> Abouts { get; set; }

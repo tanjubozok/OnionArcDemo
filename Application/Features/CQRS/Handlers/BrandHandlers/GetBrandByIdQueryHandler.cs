@@ -2,9 +2,9 @@
 
 public class GetBrandByIdQueryHandler
 {
-    private readonly IRepository<Brand> _repository;
+    private readonly IBrandRepository _repository;
 
-    public GetBrandByIdQueryHandler(IRepository<Brand> repository)
+    public GetBrandByIdQueryHandler(IBrandRepository repository)
     {
         _repository = repository;
     }

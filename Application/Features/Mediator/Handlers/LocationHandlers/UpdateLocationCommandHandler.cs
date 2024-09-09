@@ -2,11 +2,13 @@
 
 public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand>
 {
-    private readonly IRepository<Location> _repository;
+    private readonly ILocationRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateLocationCommandHandler(IRepository<Location> repository)
+    public UpdateLocationCommandHandler(ILocationRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
@@ -16,6 +18,7 @@ public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationComman
 
         value.Name = request.Name;
 
-        await _repository.UpdateAsync(value);
+         _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

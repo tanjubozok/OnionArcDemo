@@ -2,11 +2,13 @@
 
 public class DeleteCarCommandHandler
 {
-    private readonly IRepository<Car> _repository;
+    private readonly ICarRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteCarCommandHandler(IRepository<Car> repository)
+    public DeleteCarCommandHandler(ICarRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteCarCommand command)
@@ -15,6 +17,7 @@ public class DeleteCarCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Car with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

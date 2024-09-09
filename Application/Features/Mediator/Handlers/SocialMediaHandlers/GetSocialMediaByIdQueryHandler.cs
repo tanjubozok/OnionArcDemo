@@ -2,11 +2,13 @@
 
 public class GetSocialMediaByIdQueryHandler : IRequestHandler<GetSocialMediaByIdQuery, GetSocialMediaByIdQueryResult>
 {
-    private readonly IRepository<SocialMedia> _repository;
+    private readonly ISocialMediaRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetSocialMediaByIdQueryHandler(IRepository<SocialMedia> repository)
+    public GetSocialMediaByIdQueryHandler(ISocialMediaRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetSocialMediaByIdQueryResult> Handle(GetSocialMediaByIdQuery request, CancellationToken cancellationToken)

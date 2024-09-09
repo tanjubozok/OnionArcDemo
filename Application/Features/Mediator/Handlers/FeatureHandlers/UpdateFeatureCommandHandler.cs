@@ -2,11 +2,13 @@
 
 public class UpdateFeatureCommandHandler : IRequestHandler<UpdateFeatureCommand>
 {
-    private readonly IRepository<Feature> _repository;
+    private readonly IFeatureRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateFeatureCommandHandler(IRepository<Feature> repository)
+    public UpdateFeatureCommandHandler(IFeatureRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateFeatureCommand request, CancellationToken cancellationToken)
@@ -17,6 +19,7 @@ public class UpdateFeatureCommandHandler : IRequestHandler<UpdateFeatureCommand>
 
         value.Name = request.Name;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

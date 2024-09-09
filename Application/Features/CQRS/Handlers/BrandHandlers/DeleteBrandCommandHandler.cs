@@ -2,11 +2,13 @@
 
 public class DeleteBrandCommandHandler
 {
-    private readonly IRepository<Brand> _repository;
+    private readonly IBrandRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteBrandCommandHandler(IRepository<Brand> repository)
+    public DeleteBrandCommandHandler(IBrandRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteBrandCommand command)
@@ -15,6 +17,7 @@ public class DeleteBrandCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Brand with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

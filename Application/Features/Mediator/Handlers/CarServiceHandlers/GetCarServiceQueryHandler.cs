@@ -2,9 +2,9 @@
 
 public class GetCarServiceQueryHandler : IRequestHandler<GetCarServiceQuery, List<GetCarServiceQueryResult>>
 {
-    private readonly IRepository<CarService> _repository;
+    private readonly ICarServiceRepository _repository;
 
-    public GetCarServiceQueryHandler(IRepository<CarService> repository)
+    public GetCarServiceQueryHandler(ICarServiceRepository repository)
     {
         _repository = repository;
     }

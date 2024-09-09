@@ -2,11 +2,13 @@
 
 public class UpdateBrandCommandHandler
 {
-    private readonly IRepository<Brand> _repository;
+    private readonly IBrandRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateBrandCommandHandler(IRepository<Brand> repository)
+    public UpdateBrandCommandHandler(IBrandRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateBrandCommand command)
@@ -17,6 +19,6 @@ public class UpdateBrandCommandHandler
 
         value.Name = command.Name;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
     }
 }

@@ -2,11 +2,13 @@
 
 public class UpdateAboutCommandHandler
 {
-    private readonly IRepository<About> _repository;
+    private readonly IAboutRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateAboutCommandHandler(IRepository<About> repository)
+    public UpdateAboutCommandHandler(IAboutRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateAboutCommand command)
@@ -19,6 +21,7 @@ public class UpdateAboutCommandHandler
         values.Title = command.Title;
         values.ImageUrl = command.ImageUrl;
 
-        await _repository.UpdateAsync(values);
+        _repository.Update(values);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

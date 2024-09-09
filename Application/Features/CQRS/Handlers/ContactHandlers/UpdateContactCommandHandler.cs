@@ -2,11 +2,13 @@
 
 public class UpdateContactCommandHandler
 {
-    private readonly IRepository<Contact> _repository;
+    private readonly IContactRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateContactCommandHandler(IRepository<Contact> repository)
+    public UpdateContactCommandHandler(IContactRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateContactCommand command)
@@ -21,6 +23,7 @@ public class UpdateContactCommandHandler
         value.Name = command.Name;
         value.Message = command.Message;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

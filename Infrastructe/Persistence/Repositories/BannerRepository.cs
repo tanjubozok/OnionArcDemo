@@ -2,8 +2,11 @@
 
 public class BannerRepository : Repository<Banner>, IBannerRepository
 {
-    public BannerRepository(DatabaseContext context) 
+    private readonly DatabaseContext _context;
+
+    public BannerRepository(DatabaseContext context)
         : base(context)
     {
+        _context = context;
     }
 }

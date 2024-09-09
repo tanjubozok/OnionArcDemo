@@ -1,15 +1,19 @@
-﻿namespace Application.Features.CQRS.Handlers.AboutHandlers;
+﻿using Application.Results;
+
+namespace Application.Features.CQRS.Handlers.AboutHandlers;
 
 public class CreateAboutCommandHandler
 {
-    private readonly IRepository<About> _repository;
+    private readonly IAboutRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateAboutCommandHandler(IRepository<About> repository)
+    public CreateAboutCommandHandler(IAboutRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(CreateAboutCommand command)
+    public async Task<Response<CreateAboutCommand>> Handle(CreateAboutCommand command)
     {
         await _repository.CreateAsync(new About
         {
@@ -17,5 +21,8 @@ public class CreateAboutCommandHandler
             ImageUrl = command.ImageUrl,
             Title = command.Title
         });
+        await _unitOfWork.SaveChangesAsync();
+
+        return new Response<CreateAboutCommand>(ResponseType.Success, command, "Ekleme başarılı");
     }
 }

@@ -2,11 +2,13 @@
 
 public class DeleteAboutCommandHandler
 {
-    private readonly IRepository<About> _repository;
+    private readonly IAboutRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteAboutCommandHandler(IRepository<About> repository)
+    public DeleteAboutCommandHandler(IAboutRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteAboutCommand command)
@@ -15,6 +17,7 @@ public class DeleteAboutCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"About with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

@@ -2,11 +2,13 @@
 
 public class DeleteLocationCommandHandler : IRequestHandler<DeleteLocationCommand>
 {
-    private readonly IRepository<Location> _repository;
+    private readonly ILocationRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteLocationCommandHandler(IRepository<Location> repository)
+    public DeleteLocationCommandHandler(ILocationRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteLocationCommand request, CancellationToken cancellationToken)
@@ -15,6 +17,7 @@ public class DeleteLocationCommandHandler : IRequestHandler<DeleteLocationComman
             await _repository.GetByIdAsync(request.Id)
             ?? throw new KeyNotFoundException($"Location with ID '{request.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

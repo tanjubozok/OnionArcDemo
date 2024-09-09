@@ -2,11 +2,13 @@
 
 public class UpdateFooterAddressCommandHandler : IRequestHandler<UpdateFooterAddressCommand>
 {
-    private readonly IRepository<FooterAddress> _repository;
+    private readonly IFooterAddressRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateFooterAddressCommandHandler(IRepository<FooterAddress> repository)
+    public UpdateFooterAddressCommandHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateFooterAddressCommand request, CancellationToken cancellationToken)
@@ -20,6 +22,7 @@ public class UpdateFooterAddressCommandHandler : IRequestHandler<UpdateFooterAdd
         value.Phone = request.Phone;
         value.Email = request.Email;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

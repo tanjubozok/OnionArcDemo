@@ -2,11 +2,13 @@
 
 public class CreateCarCommandHandler
 {
-    private readonly IRepository<Car> _repository;
+    private readonly ICarRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCarCommandHandler(IRepository<Car> repository)
+    public CreateCarCommandHandler(ICarRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateCarCommand command)
@@ -23,5 +25,7 @@ public class CreateCarCommandHandler
             Seat = command.Seat,
             Transmission = command.Transmission
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

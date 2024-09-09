@@ -2,22 +2,27 @@
 
 public class UpdateTestimonialCommandHandler : IRequestHandler<UpdateTestimonialCommand>
 {
-    private readonly IRepository<Testimonial> _repository;
+    private readonly ITestimonialRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateTestimonialCommandHandler(IRepository<Testimonial> repository)
+    public UpdateTestimonialCommandHandler(ITestimonialRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateTestimonialCommand request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
+        var value =
+            await _repository.GetByIdAsync(request.Id)
+            ?? throw new KeyNotFoundException($"Testimonial with ID '{request.Id}' was not found.");
 
         value.Comment = request.Comment;
         value.Name = request.Name;
         value.ImageUrl = request.ImageUrl;
         value.Title = request.Title;
 
-        await _repository.UpdateAsync(value);
+        _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

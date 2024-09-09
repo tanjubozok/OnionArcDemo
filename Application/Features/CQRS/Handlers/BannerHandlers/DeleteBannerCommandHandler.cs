@@ -2,11 +2,13 @@
 
 public class DeleteBannerCommandHandler
 {
-    private readonly IRepository<Banner> _repository;
+    private readonly IBannerRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeleteBannerCommandHandler(IRepository<Banner> repository)
+    public DeleteBannerCommandHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeleteBannerCommand command)
@@ -15,6 +17,7 @@ public class DeleteBannerCommandHandler
             await _repository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Banner with ID '{command.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

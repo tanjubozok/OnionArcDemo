@@ -2,11 +2,13 @@
 
 public class UpdatePriceCommandHandler : IRequestHandler<UpdatePriceCommand>
 {
-    private readonly IRepository<Price> _repository;
+    private readonly IPriceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public UpdatePriceCommandHandler(IRepository<Price> repository)
+    public UpdatePriceCommandHandler(IPriceRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdatePriceCommand request, CancellationToken cancellationToken)
@@ -16,6 +18,7 @@ public class UpdatePriceCommandHandler : IRequestHandler<UpdatePriceCommand>
 
         value.Name = request.Name;
 
-        await _repository.UpdateAsync(value);
+         _repository.Update(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

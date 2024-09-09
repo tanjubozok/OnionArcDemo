@@ -2,9 +2,9 @@
 
 public class GetCarQueryHandler
 {
-    private readonly IRepository<Car> _repository;
+    private readonly ICarRepository _repository;
 
-    public GetCarQueryHandler(IRepository<Car> repository)
+    public GetCarQueryHandler(ICarRepository repository)
     {
         _repository = repository;
     }

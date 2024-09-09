@@ -2,9 +2,9 @@
 
 public class GetContactQueryHandler
 {
-    private readonly IRepository<Contact> _repository;
+    private readonly IContactRepository _repository;
 
-    public GetContactQueryHandler(IRepository<Contact> repository)
+    public GetContactQueryHandler(IContactRepository repository)
     {
         _repository = repository;
     }

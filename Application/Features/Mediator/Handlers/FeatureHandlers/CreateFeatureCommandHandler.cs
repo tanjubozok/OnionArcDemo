@@ -2,11 +2,13 @@
 
 public class CreateFeatureCommandHandler : IRequestHandler<CreateFeatureCommand>
 {
-    private readonly IRepository<Feature> _repository;
+    private readonly IFeatureRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFeatureCommandHandler(IRepository<Feature> repository)
+    public CreateFeatureCommandHandler(IFeatureRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateFeatureCommand request, CancellationToken cancellationToken)
@@ -15,5 +17,7 @@ public class CreateFeatureCommandHandler : IRequestHandler<CreateFeatureCommand>
         {
             Name = request.Name
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

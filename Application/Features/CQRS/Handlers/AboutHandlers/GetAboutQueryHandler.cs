@@ -2,9 +2,9 @@
 
 public class GetAboutQueryHandler
 {
-    private readonly IRepository<About> _repository;
+    private readonly IAboutRepository _repository;
 
-    public GetAboutQueryHandler(IRepository<About> repository)
+    public GetAboutQueryHandler(IAboutRepository repository)
     {
         _repository = repository;
     }

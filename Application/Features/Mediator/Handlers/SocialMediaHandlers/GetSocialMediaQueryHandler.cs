@@ -2,11 +2,13 @@
 
 public class GetSocialMediaQueryHandler : IRequestHandler<GetSocialMediaQuery, List<GetSocialMediaQueryResult>>
 {
-    private readonly IRepository<SocialMedia> _repository;
+    private readonly ISocialMediaRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetSocialMediaQueryHandler(IRepository<SocialMedia> repository)
+    public GetSocialMediaQueryHandler(ISocialMediaRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetSocialMediaQueryResult>> Handle(GetSocialMediaQuery request, CancellationToken cancellationToken)

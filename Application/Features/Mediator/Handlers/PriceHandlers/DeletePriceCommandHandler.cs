@@ -2,11 +2,13 @@
 
 public class DeletePriceCommandHandler : IRequestHandler<DeletePriceCommand>
 {
-    private readonly IRepository<Price> _repository;
+    private readonly IPriceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeletePriceCommandHandler(IRepository<Price> repository)
+    public DeletePriceCommandHandler(IPriceRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(DeletePriceCommand request, CancellationToken cancellationToken)
@@ -15,6 +17,7 @@ public class DeletePriceCommandHandler : IRequestHandler<DeletePriceCommand>
             await _repository.GetByIdAsync(request.Id)
             ?? throw new KeyNotFoundException($"Price with ID '{request.Id}' was not found.");
 
-        await _repository.DeleteAsync(value);
+        _repository.Delete(value);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

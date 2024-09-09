@@ -10,19 +10,19 @@ public class FooterAddressConfiguration : IEntityTypeConfiguration<FooterAddress
         builder.Property(x => x.Id)
             .UseIdentityColumn();
 
-        builder.Property(x=>x.Description)
+        builder.Property(x => x.Description)
             .IsRequired()
             .HasMaxLength(200);
 
-        builder.Property(x=>x.Address)
+        builder.Property(x => x.Address)
             .IsRequired()
             .HasMaxLength(200);
 
-        builder.Property(x=>x.Phone)
+        builder.Property(x => x.Phone)
             .IsRequired()
             .HasMaxLength(20);
 
-        builder.Property(x=>x.Email)
+        builder.Property(x => x.Email)
             .IsRequired()
             .HasMaxLength(100);
     }

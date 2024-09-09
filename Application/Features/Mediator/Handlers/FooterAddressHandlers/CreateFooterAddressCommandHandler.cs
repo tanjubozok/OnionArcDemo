@@ -2,11 +2,13 @@
 
 public class CreateFooterAddressCommandHandler : IRequestHandler<CreateFooterAddressCommand>
 {
-    private readonly IRepository<FooterAddress> _repository;
+    private readonly IFooterAddressRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFooterAddressCommandHandler(IRepository<FooterAddress> repository)
+    public CreateFooterAddressCommandHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateFooterAddressCommand request, CancellationToken cancellationToken)
@@ -18,5 +20,7 @@ public class CreateFooterAddressCommandHandler : IRequestHandler<CreateFooterAdd
             Description = request.Description,
             Email = request.Email
         });
+
+        await _unitOfWork.SaveChangesAsync();
     }
 }

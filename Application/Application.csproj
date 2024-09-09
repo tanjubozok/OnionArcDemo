@@ -15,4 +15,9 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\CQRS\Handlers\CarHandlers\QueryHandlers\" />
+    <Folder Include="Features\CQRS\Handlers\CarHandlers\CommandHandlers\" />
+  </ItemGroup>
+
 </Project>

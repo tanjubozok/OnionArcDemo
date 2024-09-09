@@ -2,9 +2,9 @@
 
 public class GetCategoryQueryHandler
 {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoryRepository _repository;
 
-    public GetCategoryQueryHandler(IRepository<Category> repository)
+    public GetCategoryQueryHandler(ICategoryRepository repository)
     {
         _repository = repository;
     }
