@@ -1,6 +1,4 @@
-﻿using Application.Results;
-
-namespace Application.Features.CQRS.Handlers.AboutHandlers;
+﻿namespace Application.Features.CQRS.Handlers.AboutHandlers;
 
 public class CreateAboutCommandHandler
 {
@@ -15,14 +13,24 @@ public class CreateAboutCommandHandler
 
     public async Task<Response<CreateAboutCommand>> Handle(CreateAboutCommand command)
     {
-        await _repository.CreateAsync(new About
+        try
         {
-            Description = command.Description,
-            ImageUrl = command.ImageUrl,
-            Title = command.Title
-        });
-        await _unitOfWork.SaveChangesAsync();
+            await _repository.CreateAsync(new About
+            {
+                Description = command.Description,
+                ImageUrl = command.ImageUrl,
+                Title = command.Title
+            });
 
-        return new Response<CreateAboutCommand>(ResponseType.Success, command, "Ekleme başarılı");
+            var result = await _unitOfWork.SaveChangesAsync();
+            if (result > 0)
+                return new Response<CreateAboutCommand>(ResponseType.Success, command, Message.Success);
+
+            return new Response<CreateAboutCommand>(ResponseType.SaveError, Message.SaveError);
+        }
+        catch (Exception ex)
+        {
+            return new Response<CreateAboutCommand>(ResponseType.TryCatch, ex.Message);
+        }
     }
 }

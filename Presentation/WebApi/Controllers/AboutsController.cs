@@ -43,8 +43,10 @@ public class AboutsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create(CreateAboutCommand command)
     {
-        await _createAboutCommandHandler.Handle(command);
-        return Created();
+        var result = await _createAboutCommandHandler.Handle(command);
+        if (result.ResponseType == ResponseType.Success)
+            return Ok(result.Data);
+        return BadRequest(result.Message);
     }
 
     [HttpPut]

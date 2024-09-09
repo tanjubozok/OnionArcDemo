@@ -1,4 +1,5 @@
-﻿global using Application.Features.CQRS.Commands.AboutCommands;
+﻿global using Application.ComplexTypes;
+global using Application.Features.CQRS.Commands.AboutCommands;
 global using Application.Features.CQRS.Commands.BannerCommands;
 global using Application.Features.CQRS.Commands.BrandCommands;
 global using Application.Features.CQRS.Commands.CarCommands;
