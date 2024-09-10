@@ -2,16 +2,16 @@
 
 public class GetLocationQueryHandler : IRequestHandler<GetLocationQuery, List<GetLocationQueryResult>>
 {
-    private readonly ILocationRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetLocationQueryHandler(ILocationRepository repository)
+    public GetLocationQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetLocationQueryResult>> Handle(GetLocationQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.LocationRepository.GetAllAsync();
         return values.Select(x => new GetLocationQueryResult
         {
             Id = x.Id,

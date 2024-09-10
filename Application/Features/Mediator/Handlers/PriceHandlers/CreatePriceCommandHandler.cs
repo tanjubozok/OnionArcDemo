@@ -2,18 +2,16 @@
 
 public class CreatePriceCommandHandler : IRequestHandler<CreatePriceCommand>
 {
-    private readonly IPriceRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreatePriceCommandHandler(IPriceRepository repository, IUnitOfWork unitOfWork)
+    public CreatePriceCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreatePriceCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateAsync(new Price
+        await _unitOfWork.PriceRepository.CreateAsync(new Price
         {
             Name = request.Name,
         });

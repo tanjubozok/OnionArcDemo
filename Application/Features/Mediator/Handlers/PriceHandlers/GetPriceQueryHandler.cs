@@ -2,16 +2,16 @@
 
 public class GetPriceQueryHandler : IRequestHandler<GetPriceQuery, List<GetPriceQueryResult>>
 {
-    private readonly IPriceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetPriceQueryHandler(IPriceRepository repository)
+    public GetPriceQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetPriceQueryResult>> Handle(GetPriceQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.PriceRepository.GetAllAsync();
         return values.Select(x => new GetPriceQueryResult
         {
             Id = x.Id,

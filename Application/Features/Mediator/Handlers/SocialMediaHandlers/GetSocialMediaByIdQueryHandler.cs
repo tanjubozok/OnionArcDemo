@@ -2,18 +2,19 @@
 
 public class GetSocialMediaByIdQueryHandler : IRequestHandler<GetSocialMediaByIdQuery, GetSocialMediaByIdQueryResult>
 {
-    private readonly ISocialMediaRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetSocialMediaByIdQueryHandler(ISocialMediaRepository repository, IUnitOfWork unitOfWork)
+    public GetSocialMediaByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<GetSocialMediaByIdQueryResult> Handle(GetSocialMediaByIdQuery request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
+        var value =
+           await _unitOfWork.SocialMediaRepository.GetByIdAsync(request.Id)
+           ?? throw new KeyNotFoundException($"SocialMedia with ID '{request.Id}' was not found.");
+
         return new GetSocialMediaByIdQueryResult
         {
             Icon = value.Icon,

@@ -2,18 +2,16 @@
 
 public class CreateFooterAddressCommandHandler : IRequestHandler<CreateFooterAddressCommand>
 {
-    private readonly IFooterAddressRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFooterAddressCommandHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
+    public CreateFooterAddressCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateFooterAddressCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateAsync(new FooterAddress
+        await _unitOfWork.FooterAddressRepository.CreateAsync(new FooterAddress
         {
             Phone = request.Phone,
             Address = request.Address,

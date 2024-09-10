@@ -9,6 +9,7 @@ public interface IUnitOfWork
     IBrandRepository BrandRepository { get; }
     ICarDescriptionRepository CarDescriptionRepository { get; }
     ICarFeatureRepository CarFeatureRepository { get; }
+    ICarServiceRepository CarServiceRepository { get; }
     ICarPriceRepository CarPriceRepository { get; }
     ICarRepository CarRepository { get; }
     ICategoryRepository CategoryRepository { get; }

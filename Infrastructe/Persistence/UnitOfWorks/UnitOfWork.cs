@@ -14,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
     private BrandRepository _brandRepository;
     private CarDescriptionRepository _carDescriptionRepository;
     private CarFeatureRepository _carFeatureRepository;
+    private CarServiceRepository _carServiceRepository;
     private CarPriceRepository _carPriceRepository;
     private CarRepository _carRepository;
     private CategoryRepository _categoryRepository;
@@ -69,6 +70,9 @@ public class UnitOfWork : IUnitOfWork
 
     public ITestimonialRepository TestimonialRepository
         => _testimonialRepository ?? new TestimonialRepository(_context);
+
+    public ICarServiceRepository CarServiceRepository
+        => _carServiceRepository ?? new CarServiceRepository(_context);
 
     public async Task<int> SaveChangesAsync()
         => await _context.SaveChangesAsync();

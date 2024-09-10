@@ -2,23 +2,21 @@
 
 public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand>
 {
-    private readonly ILocationRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateLocationCommandHandler(ILocationRepository repository, IUnitOfWork unitOfWork)
+    public UpdateLocationCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id)
+        var value = await _unitOfWork.LocationRepository.GetByIdAsync(request.Id)
            ?? throw new KeyNotFoundException($"Location with ID '{request.Id}' was not found.");
 
         value.Name = request.Name;
 
-         _repository.Update(value);
+        _unitOfWork.LocationRepository.Update(value);
         await _unitOfWork.SaveChangesAsync();
     }
 }

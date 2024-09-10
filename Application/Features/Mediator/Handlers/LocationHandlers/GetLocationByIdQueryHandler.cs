@@ -2,16 +2,16 @@
 
 public class GetLocationByIdQueryHandler : IRequestHandler<GetLocationByIdQuery, GetLocationByIdQueryResult>
 {
-    private readonly ILocationRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetLocationByIdQueryHandler(ILocationRepository repository)
+    public GetLocationByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetLocationByIdQueryResult> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
+        var value = await _unitOfWork.LocationRepository.GetByIdAsync(request.Id);
         return value == null
             ? throw new KeyNotFoundException($"Location with ID '{request.Id}' was not found.")
             : new GetLocationByIdQueryResult

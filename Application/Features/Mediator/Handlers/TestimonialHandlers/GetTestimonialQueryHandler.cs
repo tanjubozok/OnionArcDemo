@@ -2,16 +2,16 @@
 
 public class GetTestimonialQueryHandler : IRequestHandler<GetTestimonialQuery, List<GetTestimonialQueryResult>>
 {
-    private readonly ITestimonialRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetTestimonialQueryHandler(ITestimonialRepository repository)
+    public GetTestimonialQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetTestimonialQueryResult>> Handle(GetTestimonialQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.TestimonialRepository.GetAllAsync();
         return values.Select(x => new GetTestimonialQueryResult
         {
             Comment = x.Comment,
