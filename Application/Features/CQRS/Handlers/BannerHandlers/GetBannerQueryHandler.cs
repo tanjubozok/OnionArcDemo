@@ -2,16 +2,16 @@
 
 public class GetBannerQueryHandler
 {
-    private readonly IBannerRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetBannerQueryHandler(IBannerRepository repository)
+    public GetBannerQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetBannerQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.BannerRepository.GetAllAsync();
 
         return values.Select(x => new GetBannerQueryResult
         {

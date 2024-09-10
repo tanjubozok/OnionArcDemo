@@ -2,16 +2,16 @@
 
 public class GetAboutByIdQueryHandler
 {
-    private readonly IAboutRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetAboutByIdQueryHandler(IAboutRepository repository)
+    public GetAboutByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetAboutByIdQueryResult> Handle(GetAboutByIdQuery query)
     {
-        var result = await _repository.GetByIdAsync(query.Id);
+        var result = await _unitOfWork.AboutRepository.GetByIdAsync(query.Id);
 
         return result == null
             ? throw new KeyNotFoundException($"About with ID '{query.Id}' was not found.")

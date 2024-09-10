@@ -2,16 +2,16 @@
 
 public class GetCarByIdQueryHandler
 {
-    private readonly ICarRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCarByIdQueryHandler(ICarRepository repository)
+    public GetCarByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetCarByIdQueryResult> Handle(GetCarByIdQuery query)
     {
-        var value = await _repository.GetByIdAsync(query.Id);
+        var value = await _unitOfWork.CarRepository.GetByIdAsync(query.Id);
 
         return value == null
             ? throw new KeyNotFoundException($"Car with ID '{query.Id}' was not found.")

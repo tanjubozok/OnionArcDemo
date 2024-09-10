@@ -2,22 +2,22 @@
 
 public class GetCarWithBrandQueryHandler
 {
-    private readonly ICarRepository _carRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCarWithBrandQueryHandler(ICarRepository carRepository)
+    public GetCarWithBrandQueryHandler(IUnitOfWork unitOfWork)
     {
-        _carRepository = carRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetCarWithBrandQueryResult>> Handle()
     {
-        var values = await _carRepository.GetCarWithBrandListAsync();
+        var values = await _unitOfWork.CarRepository.GetCarWithBrandListAsync();
         return values.Select(x => new GetCarWithBrandQueryResult
         {
             Id = x.Id,
             BigImageUrl = x.BigImageUrl,
             BrandId = x.BrandId,
-            BrandName = x.Brand.Name,
+            BrandName = x.Brand!.Name,
             CoverImageUrl = x.CoverImageUrl,
             Fuel = x.Fuel,
             KM = x.KM,

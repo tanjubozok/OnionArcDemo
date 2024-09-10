@@ -2,16 +2,16 @@
 
 public class GetCarQueryHandler
 {
-    private readonly ICarRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCarQueryHandler(ICarRepository repository)
+    public GetCarQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetCarQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.CarRepository.GetAllAsync();
 
         return values.Select(x => new GetCarQueryResult
         {

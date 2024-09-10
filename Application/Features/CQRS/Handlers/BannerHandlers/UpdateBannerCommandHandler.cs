@@ -2,19 +2,17 @@
 
 public class UpdateBannerCommandHandler
 {
-    private readonly IBannerRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateBannerCommandHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
+    public UpdateBannerCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateBannerCommand command)
     {
         var value =
-            await _repository.GetByIdAsync(command.Id)
+            await _unitOfWork.BannerRepository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Banner with ID '{command.Id}' was not found.");
 
         value.Title = command.Title;
@@ -22,7 +20,7 @@ public class UpdateBannerCommandHandler
         value.VideoDescription = command.VideoDescription;
         value.VideoUrl = command.VideoUrl;
 
-        _repository.Update(value);
+        _unitOfWork.BannerRepository.Update(value);
         await _unitOfWork.SaveChangesAsync();
     }
 }

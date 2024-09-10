@@ -2,16 +2,16 @@
 
 public class GetCategoryQueryHandler
 {
-    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCategoryQueryHandler(ICategoryRepository repository)
+    public GetCategoryQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetCategoryQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.CategoryRepository.GetAllAsync();
 
         return values.Select(x => new GetCategoryQueryResult
         {

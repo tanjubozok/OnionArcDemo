@@ -2,18 +2,16 @@
 
 public class GetBannerByIdQueryHandler
 {
-    private readonly IBannerRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetBannerByIdQueryHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
+    public GetBannerByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<GetBannerByIdQueryResult> Handle(GetBannerByIdQuery query)
     {
-        var value = await _repository.GetByIdAsync(query.Id);
+        var value = await _unitOfWork.BannerRepository.GetByIdAsync(query.Id);
 
         return value == null
             ? throw new KeyNotFoundException($"About with ID '{query.Id}' was not found.")

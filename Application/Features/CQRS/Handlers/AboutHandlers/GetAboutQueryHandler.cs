@@ -2,16 +2,16 @@
 
 public class GetAboutQueryHandler
 {
-    private readonly IAboutRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetAboutQueryHandler(IAboutRepository repository)
+    public GetAboutQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetAboutQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.AboutRepository.GetAllAsync();
 
         return values.Select(x => new GetAboutQueryResult
         {

@@ -2,12 +2,10 @@
 
 public class CreateAboutCommandHandler
 {
-    private readonly IAboutRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateAboutCommandHandler(IAboutRepository repository, IUnitOfWork unitOfWork)
+    public CreateAboutCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
@@ -15,7 +13,7 @@ public class CreateAboutCommandHandler
     {
         try
         {
-            await _repository.CreateAsync(new About
+            await _unitOfWork.AboutRepository.CreateAsync(new About
             {
                 Description = command.Description,
                 ImageUrl = command.ImageUrl,

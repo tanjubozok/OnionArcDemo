@@ -2,16 +2,16 @@
 
 public class GetContactQueryHandler
 {
-    private readonly IContactRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetContactQueryHandler(IContactRepository repository)
+    public GetContactQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetContactQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.ContactRepository.GetAllAsync();
         return values.Select(x => new GetContactQueryResult
         {
             Email = x.Email,

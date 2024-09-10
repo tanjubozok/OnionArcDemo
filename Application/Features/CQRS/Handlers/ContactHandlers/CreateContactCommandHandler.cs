@@ -2,18 +2,16 @@
 
 public class CreateContactCommandHandler
 {
-    private readonly IContactRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateContactCommandHandler(IContactRepository repository, IUnitOfWork unitOfWork)
+    public CreateContactCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateContactCommand command)
     {
-        await _repository.CreateAsync(new Contact
+        await _unitOfWork.ContactRepository.CreateAsync(new Contact
         {
             Email = command.Email,
             Message = command.Message,

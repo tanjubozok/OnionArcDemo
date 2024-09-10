@@ -2,16 +2,16 @@
 
 public class GetBrandQueryHandler
 {
-    private readonly IBrandRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetBrandQueryHandler(IBrandRepository repository)
+    public GetBrandQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetBrandQueryResult>> Handle()
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.BrandRepository.GetAllAsync();
 
         return values.Select(x => new GetBrandQueryResult
         {

@@ -2,16 +2,16 @@
 
 public class GetCategoryByIdQueryHandler
 {
-    private readonly ICategoryRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCategoryByIdQueryHandler(ICategoryRepository repository)
+    public GetCategoryByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetCategoryByIdQueryResult> Handle(GetCategoryByIdQuery query)
     {
-        var value = await _repository.GetByIdAsync(query.Id);
+        var value = await _unitOfWork.CategoryRepository.GetByIdAsync(query.Id);
 
         return value == null
             ? throw new KeyNotFoundException($"Category with ID '{query.Id}' was not found.")

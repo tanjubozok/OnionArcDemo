@@ -2,24 +2,22 @@
 
 public class UpdateCategoryCommandHandler
 {
-    private readonly ICategoryRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCategoryCommandHandler(ICategoryRepository repository, IUnitOfWork unitOfWork)
+    public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateCategoryCommand command)
     {
         var result =
-           await _repository.GetByIdAsync(command.Id)
+           await _unitOfWork.CategoryRepository.GetByIdAsync(command.Id)
            ?? throw new KeyNotFoundException($"Car with ID '{command.Id}' was not found.");
 
         result.Name = command.Name;
 
-        _repository.Update(result);
+        _unitOfWork.CategoryRepository.Update(result);
         await _unitOfWork.SaveChangesAsync();
     }
 }

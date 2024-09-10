@@ -2,19 +2,17 @@
 
 public class UpdateCarCommandHandler
 {
-    private readonly ICarRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateCarCommandHandler(ICarRepository repository, IUnitOfWork unitOfWork)
+    public UpdateCarCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateCarCommand command)
     {
         var value =
-            await _repository.GetByIdAsync(command.Id)
+            await _unitOfWork.CarRepository.GetByIdAsync(command.Id)
             ?? throw new KeyNotFoundException($"Car with ID '{command.Id}' was not found.");
 
         value.KM = command.KM;
@@ -27,7 +25,7 @@ public class UpdateCarCommandHandler
         value.Model = command.Model;
         value.CoverImageUrl = command.CoverImageUrl;
 
-        _repository.Update(value);
+        _unitOfWork.CarRepository.Update(value);
         await _unitOfWork.SaveChangesAsync();
     }
 }

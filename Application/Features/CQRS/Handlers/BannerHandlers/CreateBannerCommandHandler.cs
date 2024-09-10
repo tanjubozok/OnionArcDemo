@@ -2,18 +2,16 @@
 
 public class CreateBannerCommandHandler
 {
-    private readonly IBannerRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateBannerCommandHandler(IBannerRepository repository, IUnitOfWork unitOfWork)
+    public CreateBannerCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateBannerCommand command)
     {
-        await _repository.CreateAsync(new Banner
+        await _unitOfWork.BannerRepository.CreateAsync(new Banner
         {
             Description = command.Description,
             Title = command.Title,

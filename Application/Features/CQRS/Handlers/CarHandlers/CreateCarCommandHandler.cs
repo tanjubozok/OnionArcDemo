@@ -2,18 +2,16 @@
 
 public class CreateCarCommandHandler
 {
-    private readonly ICarRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCarCommandHandler(ICarRepository repository, IUnitOfWork unitOfWork)
+    public CreateCarCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateCarCommand command)
     {
-        await _repository.CreateAsync(new Car
+        await _unitOfWork.CarRepository.CreateAsync(new Car
         {
             BigImageUrl = command.BigImageUrl,
             BrandId = command.BrandId,

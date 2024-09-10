@@ -2,16 +2,16 @@
 
 public class GetBrandByIdQueryHandler
 {
-    private readonly IBrandRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetBrandByIdQueryHandler(IBrandRepository repository)
+    public GetBrandByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetBrandByIdQueryResult> Handle(GetBrandByIdQuery query)
     {
-        var value = await _repository.GetByIdAsync(query.Id);
+        var value = await _unitOfWork.BrandRepository.GetByIdAsync(query.Id);
 
         return value == null
             ? throw new KeyNotFoundException($"Brand with ID '{query.Id}' was not found.")

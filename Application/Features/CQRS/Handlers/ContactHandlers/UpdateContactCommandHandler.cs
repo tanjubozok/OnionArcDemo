@@ -2,19 +2,17 @@
 
 public class UpdateContactCommandHandler
 {
-    private readonly IContactRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateContactCommandHandler(IContactRepository repository, IUnitOfWork unitOfWork)
+    public UpdateContactCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateContactCommand command)
     {
         var value =
-           await _repository.GetByIdAsync(command.Id)
+           await _unitOfWork.ContactRepository.GetByIdAsync(command.Id)
            ?? throw new KeyNotFoundException($"Contact with ID '{command.Id}' was not found.");
 
         value.SendDate = command.SendDate;
@@ -23,7 +21,7 @@ public class UpdateContactCommandHandler
         value.Name = command.Name;
         value.Message = command.Message;
 
-        _repository.Update(value);
+        _unitOfWork.ContactRepository.Update(value);
         await _unitOfWork.SaveChangesAsync();
     }
 }
