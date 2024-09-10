@@ -2,18 +2,16 @@
 
 public class CreateFeatureCommandHandler : IRequestHandler<CreateFeatureCommand>
 {
-    private readonly IFeatureRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateFeatureCommandHandler(IFeatureRepository repository, IUnitOfWork unitOfWork)
+    public CreateFeatureCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateFeatureCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateAsync(new Feature
+        await _unitOfWork.FeatureRepository.CreateAsync(new Feature
         {
             Name = request.Name
         });

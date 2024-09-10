@@ -2,16 +2,16 @@
 
 public class GetCarServiceByIdQueryHandler : IRequestHandler<GetCarServiceByIdQuery, GetCarServiceByIdQueryResult>
 {
-    private readonly ICarServiceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCarServiceByIdQueryHandler(ICarServiceRepository repository)
+    public GetCarServiceByIdQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<GetCarServiceByIdQueryResult> Handle(GetCarServiceByIdQuery request, CancellationToken cancellationToken)
     {
-        var value = await _repository.GetByIdAsync(request.Id);
+        var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
         return value == null
             ? throw new KeyNotFoundException($"Location with ID '{request.Id}' was not found.")
             : new GetCarServiceByIdQueryResult

@@ -2,18 +2,16 @@
 
 public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand>
 {
-    private readonly ILocationRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateLocationCommandHandler(ILocationRepository repository, IUnitOfWork unitOfWork)
+    public CreateLocationCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(CreateLocationCommand request, CancellationToken cancellationToken)
     {
-        await _repository.CreateAsync(new Location
+        await _unitOfWork.LocationRepository.CreateAsync(new Location
         {
             Name = request.Name,
         });

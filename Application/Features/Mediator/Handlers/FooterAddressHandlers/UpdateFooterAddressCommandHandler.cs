@@ -2,19 +2,17 @@
 
 public class UpdateFooterAddressCommandHandler : IRequestHandler<UpdateFooterAddressCommand>
 {
-    private readonly IFooterAddressRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateFooterAddressCommandHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
+    public UpdateFooterAddressCommandHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(UpdateFooterAddressCommand request, CancellationToken cancellationToken)
     {
         var value =
-           await _repository.GetByIdAsync(request.Id)
+           await _unitOfWork.FooterAddressRepository.GetByIdAsync(request.Id)
            ?? throw new KeyNotFoundException($"FooterAddress with ID '{request.Id}' was not found.");
 
         value.Description = request.Description;
@@ -22,7 +20,7 @@ public class UpdateFooterAddressCommandHandler : IRequestHandler<UpdateFooterAdd
         value.Phone = request.Phone;
         value.Email = request.Email;
 
-        _repository.Update(value);
+        _unitOfWork.FooterAddressRepository.Update(value);
         await _unitOfWork.SaveChangesAsync();
     }
 }

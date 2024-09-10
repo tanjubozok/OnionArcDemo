@@ -2,16 +2,16 @@
 
 public class GetFeatureQueryHandler : IRequestHandler<GetFeatureQuery, List<GetFeatureQueryResult>>
 {
-    private readonly IFeatureRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetFeatureQueryHandler(IFeatureRepository repository)
+    public GetFeatureQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetFeatureQueryResult>> Handle(GetFeatureQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.FeatureRepository.GetAllAsync();
         return values.Select(x => new GetFeatureQueryResult
         {
             Id = x.Id,

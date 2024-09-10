@@ -2,16 +2,16 @@
 
 public class GetCarServiceQueryHandler : IRequestHandler<GetCarServiceQuery, List<GetCarServiceQueryResult>>
 {
-    private readonly ICarServiceRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetCarServiceQueryHandler(ICarServiceRepository repository)
+    public GetCarServiceQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetCarServiceQueryResult>> Handle(GetCarServiceQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.CarServiceRepository.GetAllAsync();
         return values.Select(x => new GetCarServiceQueryResult
         {
             Title = x.Title,

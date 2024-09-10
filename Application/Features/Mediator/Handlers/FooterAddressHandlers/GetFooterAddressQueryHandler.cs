@@ -2,18 +2,16 @@
 
 public class GetFooterAddressQueryHandler : IRequestHandler<GetFooterAddressQuery, List<GetFooterAddressQueryResult>>
 {
-    private readonly IFooterAddressRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public GetFooterAddressQueryHandler(IFooterAddressRepository repository, IUnitOfWork unitOfWork)
+    public GetFooterAddressQueryHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<List<GetFooterAddressQueryResult>> Handle(GetFooterAddressQuery request, CancellationToken cancellationToken)
     {
-        var values = await _repository.GetAllAsync();
+        var values = await _unitOfWork.FooterAddressRepository.GetAllAsync();
         return values.Select(x => new GetFooterAddressQueryResult
         {
             Address = x.Address,
