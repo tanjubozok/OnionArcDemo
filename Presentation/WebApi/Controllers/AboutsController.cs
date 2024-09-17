@@ -46,6 +46,7 @@ public class AboutsController : ControllerBase
         var result = await _createAboutCommandHandler.Handle(command);
         if (result.ResponseType == ResponseType.Success)
             return Ok(result.Data);
+
         return BadRequest(result.Message);
     }
 

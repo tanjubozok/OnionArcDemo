@@ -1,6 +1,7 @@
 ﻿global using Application.Abstract;
 global using Application.ComplexTypes;
 global using Application.DTOs.Abstract;
+global using Application.DTOs.CarServiceDtos;
 global using Application.Features.CQRS.Commands.AboutCommands;
 global using Application.Features.CQRS.Commands.BannerCommands;
 global using Application.Features.CQRS.Commands.BrandCommands;

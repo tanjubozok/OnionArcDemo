@@ -1,4 +1,5 @@
 ﻿global using Application.Abstract;
+global using Bogus;
 global using Domain.Abstract;
 global using Domain.Entities;
 global using Microsoft.EntityFrameworkCore;
@@ -8,5 +9,6 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Persistence.Configurations;
 global using Persistence.Context;
 global using Persistence.Repositories;
+global using Persistence.Seeds;
 global using Persistence.UnitOfWorks;
 global using System.Linq.Expressions;

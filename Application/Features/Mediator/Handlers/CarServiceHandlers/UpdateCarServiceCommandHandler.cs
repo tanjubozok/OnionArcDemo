@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Mediator.Handlers.CarServiceHandlers;
 
-public class UpdateCarServiceCommandHandler : IRequestHandler<UpdateCarServiceCommand>
+public class UpdateCarServiceCommandHandler : IRequestHandler<UpdateCarServiceCommand, IResponse<UpdateCarServiceDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -9,16 +9,37 @@ public class UpdateCarServiceCommandHandler : IRequestHandler<UpdateCarServiceCo
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(UpdateCarServiceCommand request, CancellationToken cancellationToken)
+    async Task<IResponse<UpdateCarServiceDto>> IRequestHandler<UpdateCarServiceCommand, IResponse<UpdateCarServiceDto>>.Handle(UpdateCarServiceCommand request, CancellationToken cancellationToken)
     {
-        var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id)
-            ?? throw new KeyNotFoundException($"CarService with ID '{request.Id}' was not found.");
+        try
+        {
+            var data = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
+            if (data == null)
+                return new Response<UpdateCarServiceDto>(ResponseType.NotFound, string.Format(Message.IdNotFound, request.Id, "Araba servisi"));
 
-        value.Description = request.Description;
-        value.Title = request.Title;
-        value.IconUrl = request.IconUrl;
+            data.Description = request.Description;
+            data.Title = request.Title;
+            data.IconUrl = request.IconUrl;
 
-        _unitOfWork.CarServiceRepository.Update(value);
-        await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.CarServiceRepository.Update(data);
+
+            var result = await _unitOfWork.SaveChangesAsync();
+            if (result > 0)
+            {
+                UpdateCarServiceDto dto = new()
+                {
+                    Id = data.Id,
+                    Description = data.Description,
+                    IconUrl = data.IconUrl,
+                    Title = data.Title
+                };
+                return new Response<UpdateCarServiceDto>(ResponseType.Success, dto, Message.Success);
+            }
+            return new Response<UpdateCarServiceDto>(ResponseType.SaveError, Message.SaveError);
+        }
+        catch (Exception ex)
+        {
+            return new Response<UpdateCarServiceDto>(ResponseType.TryCatch, ex.Message);
+        }
     }
 }

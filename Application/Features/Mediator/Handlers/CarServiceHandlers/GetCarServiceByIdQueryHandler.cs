@@ -1,6 +1,8 @@
-﻿namespace Application.Features.Mediator.Handlers.CarServiceHandlers;
+﻿using Application.DTOs.AboutDtos;
 
-public class GetCarServiceByIdQueryHandler : IRequestHandler<GetCarServiceByIdQuery, GetCarServiceByIdQueryResult>
+namespace Application.Features.Mediator.Handlers.CarServiceHandlers;
+
+public class GetCarServiceByIdQueryHandler : IRequestHandler<GetCarServiceByIdQuery, IResponse<GetByIdCarServiceDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -9,17 +11,29 @@ public class GetCarServiceByIdQueryHandler : IRequestHandler<GetCarServiceByIdQu
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<GetCarServiceByIdQueryResult> Handle(GetCarServiceByIdQuery request, CancellationToken cancellationToken)
+    public async Task<IResponse<GetCarServiceByIdQueryResult>> Handle(GetCarServiceByIdQuery request, CancellationToken cancellationToken)
     {
-        var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
-        return value == null
-            ? throw new KeyNotFoundException($"Location with ID '{request.Id}' was not found.")
-            : new GetCarServiceByIdQueryResult
+        try
+        {
+            var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
+
+            if (value == null)
+                return new Response<GetCarServiceByIdQueryResult>(ResponseType.NotFound, "Car service not found.");
+
+            var result = new GetCarServiceByIdQueryResult
             {
                 Id = value.Id,
                 Description = value.Description,
                 IconUrl = value.IconUrl,
-                Title = value.Title,
+                Title = value.Title
             };
+
+            return new Response<GetCarServiceByIdQueryResult>(ResponseType.Success, result, "Car service retrieved successfully.");
+        }
+        catch (Exception ex)
+        {
+            return new Response<GetCarServiceByIdQueryResult>(ResponseType.TryCatch, ex.Message);
+        }
     }
 }
+

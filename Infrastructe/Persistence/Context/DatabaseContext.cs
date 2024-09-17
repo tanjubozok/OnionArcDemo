@@ -7,14 +7,10 @@ public class DatabaseContext : DbContext
     {
     }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    //optionsBuilder.UseSqlServer("Server=DESKTOP-99JOTPE;Database=OnionArcData;User Id=sa;Password=1234;TrustServerCertificate=True;");
-    //    optionsBuilder.UseSqlServer("Server=localhost,1433;Database=OnionArcData;User Id=sa;Password=Root123*;TrustServerCertificate=True;");
-    //}
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        #region configurations
+
         modelBuilder.ApplyConfiguration(new AboutConfiguration());
         modelBuilder.ApplyConfiguration(new BannerConfiguration());
         modelBuilder.ApplyConfiguration(new BrandConfiguration());
@@ -31,7 +27,32 @@ public class DatabaseContext : DbContext
         modelBuilder.ApplyConfiguration(new PriceConfiguration());
         modelBuilder.ApplyConfiguration(new SocialMediaConfiguration());
         modelBuilder.ApplyConfiguration(new TestimonialConfiguration());
+
+        #endregion
+
+        #region seeds
+
+        modelBuilder.ApplyConfiguration(new AboutSeed());
+        modelBuilder.ApplyConfiguration(new BannerSeed());
+        modelBuilder.ApplyConfiguration(new BrandSeed());
+        modelBuilder.ApplyConfiguration(new CarSeeed());
+        modelBuilder.ApplyConfiguration(new CarDescriptionSeed());
+        modelBuilder.ApplyConfiguration(new CarFeatureSeed());
+        modelBuilder.ApplyConfiguration(new CarServiceSeed());
+        modelBuilder.ApplyConfiguration(new CarPriceSeed());
+        modelBuilder.ApplyConfiguration(new CategorySeed());
+        modelBuilder.ApplyConfiguration(new ContactSeed());
+        modelBuilder.ApplyConfiguration(new FeatureSeed());
+        modelBuilder.ApplyConfiguration(new FooterAddressSeed());
+        modelBuilder.ApplyConfiguration(new LocationSeed());
+        modelBuilder.ApplyConfiguration(new PriceSeed());
+        modelBuilder.ApplyConfiguration(new SocialMediaSeed());
+        modelBuilder.ApplyConfiguration(new TestimonialSeed());
+
+        #endregion
     }
+
+    #region dbSet
 
     public DbSet<About> Abouts { get; set; }
     public DbSet<Banner> Banners { get; set; }
@@ -49,4 +70,6 @@ public class DatabaseContext : DbContext
     public DbSet<Price> Prices { get; set; }
     public DbSet<SocialMedia> SocialMedias { get; set; }
     public DbSet<Testimonial> Testimonials { get; set; }
+
+    #endregion
 }

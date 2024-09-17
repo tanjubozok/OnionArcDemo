@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Mediator.Commands.CarServiceCommands;
 
-public class UpdateCarServiceCommand : IRequest
+public class UpdateCarServiceCommand : IRequest<IResponse<UpdateCarServiceDto>>
 {
     public int Id { get; set; }
     public string Title { get; set; }

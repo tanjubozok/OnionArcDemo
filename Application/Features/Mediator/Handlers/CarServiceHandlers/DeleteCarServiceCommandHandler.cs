@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Mediator.Handlers.CarServiceHandlers;
 
-public class DeleteCarServiceCommandHandler : IRequestHandler<DeleteCarServiceCommand>
+public class DeleteCarServiceCommandHandler : IRequestHandler<DeleteCarServiceCommand, IResponse<DeleteCarServiceDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -9,13 +9,24 @@ public class DeleteCarServiceCommandHandler : IRequestHandler<DeleteCarServiceCo
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(DeleteCarServiceCommand request, CancellationToken cancellationToken)
+    public async Task<IResponse<DeleteCarServiceDto>> Handle(DeleteCarServiceCommand request, CancellationToken cancellationToken)
     {
-        var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id)
-            ?? throw new KeyNotFoundException($"CarService with ID '{request.Id}' was not found.");
+        try
+        {
+            var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
+            if (value == null)
+                return new Response<DeleteCarServiceDto>(ResponseType.NotFound, string.Format(Message.IdNotFound, request.Id, "Araba Servisi"));
 
-        _unitOfWork.CarServiceRepository.Delete(value);
+            _unitOfWork.CarServiceRepository.Delete(value);
 
-        await _unitOfWork.SaveChangesAsync();
+            var result = await _unitOfWork.SaveChangesAsync();
+            if (result > 0)
+                return new Response<DeleteCarServiceDto>(ResponseType.Success, Message.Deleted);
+            return new Response<DeleteCarServiceDto>(ResponseType.SaveError, Message.SaveError);
+        }
+        catch (Exception ex)
+        {
+            return new Response<DeleteCarServiceDto>(ResponseType.TryCatch, ex.Message);
+        }
     }
 }
