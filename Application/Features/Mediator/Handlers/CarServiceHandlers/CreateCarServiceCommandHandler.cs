@@ -3,17 +3,19 @@
 public class CreateCarServiceCommandHandler : IRequestHandler<CreateCarServiceCommand, IResponse<CreateCarServiceDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICarServiceRepository _repository;
 
-    public CreateCarServiceCommandHandler(IUnitOfWork unitOfWork)
+    public CreateCarServiceCommandHandler(IUnitOfWork unitOfWork, ICarServiceRepository repository)
     {
         _unitOfWork = unitOfWork;
-    }
+        _repository = repository;
+    }    
 
     public async Task<IResponse<CreateCarServiceDto>> Handle(CreateCarServiceCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var data = await _unitOfWork.CarServiceRepository.CreateAsync(new CarService
+            var data = await _repository.CreateAsync(new CarService
             {
                 Description = request.Description,
                 IconUrl = request.IconUrl,

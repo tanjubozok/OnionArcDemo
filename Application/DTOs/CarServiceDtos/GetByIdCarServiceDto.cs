@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.CarServiceDtos;
 
-public class GetByIdCarServiceDto : IRequest<IResponse<GetCarServiceByIdQueryResult>>
+public class GetByIdCarServiceDto : IBaseDto
 {
     public int Id { get; set; }
 }

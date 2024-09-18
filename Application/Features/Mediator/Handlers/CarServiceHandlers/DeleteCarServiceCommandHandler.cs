@@ -3,21 +3,23 @@
 public class DeleteCarServiceCommandHandler : IRequestHandler<DeleteCarServiceCommand, IResponse<DeleteCarServiceDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICarServiceRepository _repository;
 
-    public DeleteCarServiceCommandHandler(IUnitOfWork unitOfWork)
+    public DeleteCarServiceCommandHandler(IUnitOfWork unitOfWork, ICarServiceRepository repository)
     {
         _unitOfWork = unitOfWork;
+        _repository = repository;
     }
 
     public async Task<IResponse<DeleteCarServiceDto>> Handle(DeleteCarServiceCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var value = await _unitOfWork.CarServiceRepository.GetByIdAsync(request.Id);
+            var value = await _repository.GetByIdAsync(request.Id);
             if (value == null)
                 return new Response<DeleteCarServiceDto>(ResponseType.NotFound, string.Format(Message.IdNotFound, request.Id, "Araba Servisi"));
 
-            _unitOfWork.CarServiceRepository.Delete(value);
+            _repository.Delete(value);
 
             var result = await _unitOfWork.SaveChangesAsync();
             if (result > 0)

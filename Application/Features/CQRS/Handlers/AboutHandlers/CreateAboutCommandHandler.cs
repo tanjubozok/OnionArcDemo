@@ -3,17 +3,19 @@
 public class CreateAboutCommandHandler
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAboutRepository _aboutRepository;
 
-    public CreateAboutCommandHandler(IUnitOfWork unitOfWork)
+    public CreateAboutCommandHandler(IUnitOfWork unitOfWork, IAboutRepository aboutRepository)
     {
         _unitOfWork = unitOfWork;
+        _aboutRepository = aboutRepository;
     }
 
     public async Task<Response<CreateAboutCommand>> Handle(CreateAboutCommand command)
     {
         try
         {
-            await _unitOfWork.AboutRepository.CreateAsync(new About
+            await _aboutRepository.CreateAsync(new About
             {
                 Description = command.Description,
                 ImageUrl = command.ImageUrl,
